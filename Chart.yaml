@@ -1,0 +1,13 @@
+apiVersion: v2
+name: test-app
+description: A Helm chart for test application with ArgoCD integration
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - web
+  - nginx
+  - demo
+maintainers:
+  - name: basim
+    email: basim.hassan@northbaysolutions.net

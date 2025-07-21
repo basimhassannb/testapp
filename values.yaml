@@ -1,0 +1,79 @@
+# Default values for test-app
+replicaCount: 2
+
+image:
+  repository: nginx
+  tag: "1.20"
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: LoadBalancer
+  port: 80
+  targetPort: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: test-app.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 128Mi
+  requests:
+    cpu: 250m
+    memory: 64Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+# Application specific configuration
+app:
+  version: "v1.0.0"
+  name: "Test Application"
+  environment: "development"
+
+# ConfigMap data
+configMap:
+  enabled: true
+  data:
+    app.conf: |
+      server {
+          listen 80;
+          server_name localhost;
+          location / {
+              root /usr/share/nginx/html;
+              index index.html;
+          }
+      }
+
+# Probes
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 5
+  periodSeconds: 5
