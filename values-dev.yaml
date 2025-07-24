@@ -5,7 +5,7 @@ image:
 
 app:
   environment: "development"
-  version: "v1.0.0-dev"
+  version: "v2.0.0-dev"
 
 service:
   type: LoadBalancer
